@@ -1,0 +1,12 @@
+---
+#OMAR EDUARDO MORALES LOPEZ
+- name: Generar información del partido
+  hosts: all
+  become: true
+  gather_facts: no
+  vars:
+    tenista1_first_name: "Omar"
+    tenista1_last_name: "Morales"
+    tenista1_city: "Culiacan"
+  roles:
+    - generacion_partido

@@ -1,0 +1,3 @@
+---
+#OMAR EDUARDO MORALES LOPEZ
+tenista1_id: "{{ lookup('file', '/vagrant/partido_vars.yml') | from_yaml | json_query('tenista1_id')}}"

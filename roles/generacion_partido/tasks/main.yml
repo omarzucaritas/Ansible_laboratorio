@@ -1,0 +1,29 @@
+---
+#OMAR EDUARDO MORALES LOPEZ
+- name: Obtener fecha del partido
+  set_fact:
+    fecha_partido: "{{ lookup('pipe', 'date +%Y-%m-%d_%H:%M') }}"
+
+- name: Extraer datos del segundo tenista
+  uri:
+    url: "https://random-data-api.com/api/users/random_user?size=1"
+    return_content: yes
+  register: random_tenista2_info
+  
+- set_fact:
+    tenista2_first_name: "{{ random_tenista2_info.json[0].first_name }}"
+    tenista2_last_name: "{{ random_tenista2_info.json[0].last_name }}"
+    tenista2_city: "{{ random_tenista2_info.json[0].address.city }}"
+    tenista2_id: "{{ random_tenista2_info.json[0].id }}"
+
+- name: Generarcion de archivo partido.txt
+  template:
+    src: /vagrant/roles/generacion_partido/templates/partido.txt.j2
+    dest: /vagrant/partido.txt
+
+- name: Se obtiene el contenido de partido.txt
+  command: cat /vagrant/partido.txt
+  register: command_output
+  
+- name: Se muestra la informacion del partido
+  debug: msg="{{command_output.stdout}}"
